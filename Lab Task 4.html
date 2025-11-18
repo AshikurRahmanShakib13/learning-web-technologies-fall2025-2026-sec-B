@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Lab Task 4 Form</title>
+</head>
+<body>
+
+  <h2>Information Form</h2>
+
+  <form action="#" method="post" id="infoForm">
+
+    <div class="form-field" id="fieldName">
+      <label for="name">Name:</label><br>
+      <input type="text" id="name" name="name" required><br>
+
+      <script>
+        (function() {
+          const nameInput = document.getElementById('name');
+          const fieldDiv = document.getElementById('fieldName');
+
+          nameInput.addEventListener('input', function() {
+            this.value = this.value.toUpperCase();
+          });
+
+          nameInput.addEventListener('blur', function() {
+            validateName();
+          });
+
+          function validateName() {
+            const val = nameInput.value.trim();
+            if (val === '') {
+              fieldDiv.classList.add('error');
+              alert('Name cannot be empty.');
+              return false;
+            }
+            if (val !== val.toUpperCase()) {
+              fieldDiv.classList.add('error');
+              alert('Name must be in uppercase letters (spaces allowed).');
+              return false;
+            }
+            fieldDiv.classList.remove('error');
+            return true;
+          }
+
+          const form = document.getElementById('infoForm');
+          form.addEventListener('submit', function(e) {
+            if (!validateName()) {
+              e.preventDefault();
+            }
+          });
+        })();
+      </script>
+
+      <style>
+        .error input {
+          border: 2px solid red;
+        }
+      </style>
+    </div>
+
+    <div class="form-field" id="fieldId">
+      <label for="userId">Unique ID:</label><br>
+      <input type="text" id="userId" name="userId" required><br>
+
+      <script>
+        (function(){
+          const input = document.getElementById('userId');
+          const container = document.getElementById('fieldId');
+          const form = document.getElementById('infoForm');
+
+          function validateId() {
+            const val = input.value;
+            const trimmed = val.trim();
+
+            if (trimmed === '') {
+              container.classList.add('error');
+              alert('ID cannot be empty.');
+              return false;
+            }
+
+            if (trimmed.indexOf(' ') >= 0) {
+              container.classList.add('error');
+              alert('ID must not contain any spaces.');
+              return false;
+            }
+
+            for (let i = 0; i < trimmed.length; i++) {
+              const ch = trimmed.charAt(i);
+              const code = ch.charCodeAt(0);
+              const isUpper = (code >= 65 && code <= 90);   // A-Z
+              const isLower = (code >= 97 && code <= 122);  // a-z
+              if (!(isUpper || isLower)) {
+                container.classList.add('error');
+                alert('ID must contain letters only (no numbers, no punctuation).');
+                return false;
+              }
+            }
+
+            container.classList.remove('error');
+            return true;
+          }
+
+          input.addEventListener('blur', validateId);
+
+          form.addEventListener('submit', function(e){
+            if (!validateId()) {
+              e.preventDefault();
+            }
+          });
+        })();
+      </script>
+
+      <style>
+        .error input {
+          border: 2px solid red;
+        }
+      </style>
+    </div>
+
+    <div class="form-field" id="fieldEmail">
+      <label for="email">Email:</label><br>
+      <input type="email" id="email" name="email" required><br>
+
+      <script>
+        (function(){
+          const input = document.getElementById('email');
+          const container = document.getElementById('fieldEmail');
+          const form = document.getElementById('infoForm');
+
+          function validateEmail() {
+            const val = input.value.trim();
+            const atIndex = val.indexOf('@');
+            if (atIndex < 1) {
+              container.classList.add('error');
+              alert('Email must have something before @.');
+              return false;
+            }
+
+            const localPart = val.substring(0, atIndex);
+            const domainPart = val.substring(atIndex + 1);
+            const dotIndex = domainPart.indexOf('.');
+            if (dotIndex <= 0) {
+              container.classList.add('error');
+              alert('Email domain must contain a dot after the domain name.');
+              return false;
+            }
+
+            const domainName = domainPart.substring(0, dotIndex);
+            const tld = domainPart.substring(dotIndex + 1);
+
+            if (!(domainName === 'gmail' || domainName === 'yahoo' || domainName === 'hotmail')) {
+              container.classList.add('error');
+              alert('Domain must be gmail, yahoo or hotmail.');
+              return false;
+            }
+
+            if (tld.length < 1) {
+              container.classList.add('error');
+              alert('Email must have letters after the dot in domain.');
+              return false;
+            }
+            for (let i = 0; i < tld.length; i++) {
+              const ch = tld.charAt(i);
+              const code = ch.charCodeAt(0);
+              const isUpper = (code >= 65 && code <= 90);
+              const isLower = (code >= 97 && code <= 122);
+              if (!(isUpper || isLower)) {
+                container.classList.add('error');
+                alert('After the dot, only letters are allowed in domain extension.');
+                return false;
+              }
+            }
+
+            container.classList.remove('error');
+            return true;
+          }
+
+          input.addEventListener('blur', validateEmail);
+
+          form.addEventListener('submit', function(e) {
+            if (!validateEmail()) {
+              e.preventDefault();
+            }
+          });
+        })();
+      </script>
+
+      <style>
+        .error input {
+          border: 2px solid red;
+        }
+      </style>
+    </div>
+
+    <div class="form-field" id="fieldPhone">
+      <label for="phone">Phone:</label><br>
+      <input type="tel" id="phone" name="phone" required><br>
+
+      <script>
+        (function(){
+          const input = document.getElementById('phone');
+          const container = document.getElementById('fieldPhone');
+          const form = document.getElementById('infoForm');
+
+          function validatePhone() {
+            const val = input.value.trim();
+
+            if (val === '') {
+              container.classList.add('error');
+              alert('Phone cannot be empty.');
+              return false;
+            }
+
+            if (val.length !== 11) {
+              container.classList.add('error');
+              alert('Phone must be exactly 11 digits.');
+              return false;
+            }
+
+            for (let i = 0; i < val.length; i++) {
+              const ch = val.charAt(i);
+              const code = ch.charCodeAt(0);
+              const isDigit = (code >= 48 && code <= 57);
+              if (!isDigit) {
+                container.classList.add('error');
+                alert('Phone must contain only numbers.');
+                return false;
+              }
+            }
+
+            container.classList.remove('error');
+            return true;
+          }
+
+          input.addEventListener('blur', validatePhone);
+
+          form.addEventListener('submit', function(e){
+            if (!validatePhone()) {
+              e.preventDefault();
+            }
+          });
+        })();
+      </script>
+
+      <style>
+        .error input {
+          border: 2px solid red;
+        }
+      </style>
+    </div>
+
+    <div class="form-field" id="fieldDob">
+      <label for="dob">Date of Birth:</label><br>
+      <input type="date" id="dob" name="dob" required><br>
+
+      <script>
+        (function(){
+          const input = document.getElementById('dob');
+          const container = document.getElementById('fieldDob');
+          const form = document.getElementById('infoForm');
+
+          function validateDob() {
+            const val = input.value;
+            if (!val) {
+              container.classList.add('error');
+              alert('Date of Birth cannot be empty.');
+              return false;
+            }
+
+            const dobDate = new Date(val);
+            const today = new Date();
+
+            let age = today.getFullYear() - dobDate.getFullYear();
+            const monthDiff = today.getMonth() - dobDate.getMonth();
+            const dayDiff = today.getDate() - dobDate.getDate();
+
+            if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
+              age--;
+            }
+
+            if (age < 13) {
+              container.classList.add('error');
+              alert('You must be at least 13 years old.');
+              return false;
+            }
+
+            if (dobDate > today) {
+              container.classList.add('error');
+              alert('Date of Birth cannot be in the future.');
+              return false;
+            }
+
+            container.classList.remove('error');
+            return true;
+          }
+
+          input.addEventListener('blur', validateDob);
+
+          form.addEventListener('submit', function(e) {
+            if (!validateDob()) {
+              e.preventDefault();
+            }
+          });
+        })();
+      </script>
+
+      <style>
+        .error input {
+          border: 2px solid red;
+        }
+      </style>
+    </div>
+
+    <div class="form-field" id="fieldGender">
+      <label>Gender:</label><br>
+      <input type="radio" id="genderMale" name="gender" value="male" required>
+      <label for="genderMale">Male</label><br>
+      <input type="radio" id="genderFemale" name="gender" value="female">
+      <label for="genderFemale">Female</label><br>
+      <input type="radio" id="genderOther" name="gender" value="other">
+      <label for="genderOther">Other</label><br>
+    </div>
+
+    <div class="form-field" id="fieldSubmit">
+      <button type="submit">Save</button>
+    </div>
+
+  </form>
+
+  <script>
+    document.getElementById('infoForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      const name = document.getElementById('name').value;
+      const userId = document.getElementById('userId').value;
+      const email = document.getElementById('email').value;
+      const phone = document.getElementById('phone').value;
+      const dob = document.getElementById('dob').value;
+
+      let gender = '';
+      const genderRadios = document.getElementsByName('gender');
+      for (let i = 0; i < genderRadios.length; i++) {
+        if (genderRadios[i].checked) {
+          gender = genderRadios[i].value;
+          break;
+        }
+      }
+
+      const message = 
+        'Name: ' + name + '\\n' +
+        'ID: ' + userId + '\\n' +
+        'Email: ' + email + '\\n' +
+        'Phone: ' + phone + '\\n' +
+        'Date of Birth: ' + dob + '\\n' +
+        'Gender: ' + gender;
+
+      alert(message);
+    });
+  </script>
+
+</body>
+</html>
