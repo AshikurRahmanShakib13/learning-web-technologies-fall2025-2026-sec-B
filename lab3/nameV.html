@@ -1,0 +1,68 @@
+<html>
+<head><title>Name Validation</title></head>
+<body>
+    
+<h2>Name Validation</h2>
+
+<form onsubmit="return validate()">
+             Name: <input type="text" id="name" onblur="checkName()"><br>
+
+
+             <p id="error"></p>
+             <input type="submit" value="Submit">
+</form>
+
+<script>
+
+function checkName(){
+  var name = document.getElementById("name").value.trim();
+  var error = document.getElementById("error");
+  var words = name.split(" ");
+  var count = 0;
+
+  for(var i=0;i<words.length;i++){
+    if(words[i]!=""){count++;}
+  }
+
+    if(name==""){
+    error.innerHTML="Name cannot be empty";
+  }
+
+  else if(!(name.charAt(0)>='A' && name.charAt(0)<='Z' || name.charAt(0)>='a' && name.charAt(0)<='z')){
+    error.innerHTML="Name must start with a letter";
+  }
+
+  else if(count<2){
+    error.innerHTML="Must contain at least two words";
+  }
+  
+  else{
+    var valid=true;
+    for(var i=0;i<name.length;i++){
+      var ch=name.charAt(i);
+      if(!((ch>='A'&&ch<='Z')||(ch>='a'&&ch<='z')||ch=='.'||ch=='-'||ch==' ')){
+        valid=false;
+      }
+    }
+    if(!valid){
+      error.innerHTML="Only letters, dot or dash allowed";
+    }else{
+      error.innerHTML="";
+    }
+  }
+}
+
+function validate(){
+  checkName();
+  if(document.getElementById("error").innerHTML==""){
+    return true;
+   }
+  else{
+    return false;
+   }
+
+}
+
+</script>
+</body>
+</html>
