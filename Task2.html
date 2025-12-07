@@ -1,0 +1,70 @@
+<html>
+<head>
+    <title>PERSON PROFILE</title>
+</head>
+<body>
+    <form>
+        <table border="1" width="60%" align="center">
+            <tr>
+                <td colspan="2" align="center">
+                    <h1>PERSON PROFILE</h1>
+                </td>
+            </tr>
+            
+            <tr>
+                <td>Name</td>
+                <td><input type="text" name="name" size="40"></td>
+            </tr>
+            <tr>
+                <td>Email</td>
+                <td><input type="email" name="email" size="40"></td>
+            </tr>
+            <tr>
+                <td>Gender</td>
+                <td>
+                    <input type="radio" id="male" name="gender" value="Male"> <label for="male">Male</label>
+                    <input type="radio" id="female" name="gender" value="Female"> <label for="female">Female</label>
+                    <input type="radio" id="other" name="gender" value="Other"> <label for="other">Other</label>
+                </td>
+            </tr>
+            <tr>
+                <td>Date of Birth</td>
+                <td>
+                    <input type="text" name="dob_dd" size="2" maxlength="2"> /
+                    <input type="text" name="dob_mm" size="2" maxlength="2"> /
+                    <input type="text" name="dob_yyyy" size="4" maxlength="4"> (dd/mm/yyyy)
+                </td>
+            </tr>
+            <tr>
+                <td>Blood Group</td>
+                <td>
+                    <select name="blood_group">
+                        <option value="a_plus">A+</option>
+                        <option value="b_plus">B+</option>
+                        <option value="o_plus">O+</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Degree</td>
+                <td>
+                    <input type="checkbox" name="degree_ssc"> SSC.
+                    <input type="checkbox" name="degree_hsc"> HSC.
+                    <input type="checkbox" name="degree_bsc"> BSc.
+                    <input type="checkbox" name="degree_msc"> MSc.
+                </td>
+            </tr>
+            <tr>
+                <td>Photo</td>
+                <td><input type="file" name="photo"></td>
+            </tr>
+            <tr>
+                <td colspan="2" align="right">
+                    <input type="submit" value="Submit">
+                    <input type="reset" value="Reset">
+                </td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>
